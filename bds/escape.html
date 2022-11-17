@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        code input:<br>
+        <textarea id="input" rows=10 cols=100></textarea><br>
+        <button onclick="escape()">escape</button>
+        <br><br>
+        output:<br>
+        <textarea readonly id="output" rows=10 cols=100></textarea><br>
+        <button onclick="copy()">copy</button>
+        
+        <script>
+            function escape(){
+                const input = document.getElementById("input").value
+                const output = input
+                    .replace(/\$/g,'%{DOL}%')
+                    .replace(/\]/g,'\\]')
+                    .replace(/\;/g,'\\;');
+                document.getElementById('output').value=output;
+            }
+            
+            function copy(){
+                const text = document.getElementById('output').value;
+                navigator.clipboard.writeText(text)
+            }
+        </script>
+    </body>
+</html>
