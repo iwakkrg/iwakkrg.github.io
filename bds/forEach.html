@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h2>bds array forEach tool thing</h2>
+        escape element: <input type="text" id="escaped" placeholder="boolean"></input><br>
+        array: <input type="text" id="array" placeholder="example: $message"></input><br>
+        array separator: <input type="text" id="separator"></input><br>
+        code input:<br>
+        <textarea name="input" id="input" rows=10 cols=70 placeholder="example: $sendMessage[ELEMENT]"></textarea>
+        <br>
+        <button onclick="loop()">convert</button><br>
+        <small>
+            <p>(use 'ELEMENT' as a placeholder value from the array)</p>
+        </small>
+        <br><br>
+        output:<br>
+        <textarea readonly name="output" id="output" rows=10 cols=70></textarea>
+        <br>
+        <button onclick="copy()">copy</button>
+        <small>
+            <p>(replace 'SEPARATOR' with anything to separate the response)</p>
+        </small>
+        <br><br>
+        <script>
+            function loop(){
+                let input = document.getElementById("input").value
+                    .replace(/\$/g,'%{DOL}%')
+                    .replace(/\]/g,'\\]')
+                    .replace(/\;/g,'\\;');
+                let separator = document.getElementById('separator').value.replace(/\\n/g,'\n');
+                const escaped = document.getElementById('escaped').value;
+                const array = document.getElementById('array').value;
+            
+                const code = input.split("ELEMENT");
+                let start = code[0]
+                let end = code[1]
+                if(escaped){
+                    start = `${code[0]}%{DOL}%url[decode\\;`
+                    end = `\\]${code[1]}`
+                    separator = encodeURIComponent(separator).replace(/\%20/g,'+')
+                }
+                let output = `$eval[${start}$replaceText[${escaped?'$url[encode;'+array+']':array};${separator};${end}SEPARATOR${start}]${end}]`;
+                if(separator==""){
+                    output = `$eval[$textSplit[${array};]${code[0]}$joinSplitText[${code[1]}SEPARATOR${code[0]}]${code[1]}]`
+                }
+                document.getElementById('output').value=output;
+            }
+            
+            function copy(){
+                const text = document.getElementById('output').value;
+                navigator.clipboard.writeText(text)
+            }
+        </script>
+    </body>
+</html>
