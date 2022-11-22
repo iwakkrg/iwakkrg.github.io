@@ -5,16 +5,18 @@ body {
     color: #eee;
     background-color: #121212;
 }
-textarea {
+textarea, input {
     font-family: Monospace;
     font-size: 13px;
     color: #eee;
     padding: 5px 5px;
-    width: 100%;
-    height: 200px;
     border: 2px solid #333333;
     border-radius: 5px;
     background-color: #222222;
+}
+textarea {
+    width: 100%;
+    height: 200px;
 }
 button {
     background-color: #5865f2;
