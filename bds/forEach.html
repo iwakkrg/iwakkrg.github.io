@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <link rel="stylesheet" href="style.css"/>
+    </head>
     <body>
         <h2>bds array forEach tool thing</h2>
         escape element: <input type="text" id="escaped" placeholder="boolean"></input><br>
         array: <input type="text" id="array" placeholder="example: $message"></input><br>
         array separator: <input type="text" id="separator"></input><br>
         code input:<br>
-        <textarea name="input" id="input" rows=10 cols=70 placeholder="example: $sendMessage[ELEMENT]"></textarea>
+        <textarea name="input" id="input" placeholder="example: $sendMessage[ELEMENT]"></textarea>
         <br>
         <button onclick="loop()">convert</button><br>
         <small>
@@ -14,7 +17,7 @@
         </small>
         <br><br>
         output:<br>
-        <textarea readonly name="output" id="output" rows=10 cols=70></textarea>
+        <textarea readonly name="output" id="output"></textarea>
         <br>
         <button onclick="copy()">copy</button>
         <small>
