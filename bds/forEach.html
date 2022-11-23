@@ -5,22 +5,23 @@
         <link rel="stylesheet" href="style.css"/>
     </head>
     <body>
-        <h2>bds array forEach tool thing</h2>
+        <h1>bds array forEach tool thing</h1>
         escape element: <input type="text" id="escaped" placeholder="boolean"></input><br>
         array: <input type="text" id="array" placeholder="example: $message"></input><br>
-        array separator: <input type="text" id="separator"></input><br>
-        code input:<br>
+        array separator: <input type="text" id="separator" placeholder="use '\n' for new line"></input><br>
+        <h3>code input:</h3>
         <textarea name="input" id="input" placeholder="example: $sendMessage[ELEMENT]"></textarea>
         <br>
-        <button onclick="loop()">convert</button><br>
+        <button id="danger" onclick="reset()">reset</button>
+        <button onclick="loop()">convert</button>
         <small>
-            <p>(use 'ELEMENT' as a placeholder value from the array)</p>
+            <p>(use 'ELEMENT' as a placeholder value from the array, can only be used once)</p>
         </small>
-        <br><br>
-        output:<br>
+        <br>
+        <h3>output:</h3>
         <textarea readonly name="output" id="output"></textarea>
         <br>
-        <button onclick="copy()">copy</button>
+        <button id="secondary" onclick="copy()">copy</button>
         <small>
             <p>(replace 'SEPARATOR' with anything to separate the response)</p>
         </small>
@@ -48,6 +49,10 @@
                     output = `$eval[$textSplit[${array};]${code[0]}$joinSplitText[${code[1]}SEPARATOR${code[0]}]${code[1]}]`
                 }
                 document.getElementById('output').value=output;
+            }
+            
+            function reset(){
+                document.getElementById('input').value = document.getElementById('output').value = ""
             }
             
             function copy(){
