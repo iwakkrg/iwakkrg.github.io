@@ -5,13 +5,15 @@
         <link rel="stylesheet" href="style.css"/>
     </head>
     <body>
-        code input:<br>
+        <h1>bds code escaper I guess</h1>
+        <h3>code input:</h3>
         <textarea id="input"></textarea><br>
         <button onclick="escape()">escape</button>
+        <button id="danger" onclick="reset()">reset</button>
         <br><br>
-        output:<br>
+        <h3>output:</h3>
         <textarea readonly id="output"></textarea><br>
-        <button onclick="copy()">copy</button>
+        <button id="secondary" onclick="copy()">copy</button>
         
         <script>
             function escape(){
@@ -21,6 +23,10 @@
                     .replace(/\]/g,'\\]')
                     .replace(/\;/g,'\\;');
                 document.getElementById('output').value=output;
+            }
+            
+            function reset(){
+                document.getElementById('input').value = document.getElementById('output').value = ""
             }
             
             function copy(){
