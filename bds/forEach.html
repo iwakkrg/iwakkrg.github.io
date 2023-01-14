@@ -2,7 +2,9 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta name="theme-color" content="#333333"/>
         <link rel="stylesheet" href="style.css"/>
+        <script src="scripts.js"></script>
     </head>
     <body>
         <h1>bds array forEach tool thing</h1>
@@ -13,7 +15,7 @@
         <textarea name="input" id="input" placeholder="example: $sendMessage[ELEMENT]"></textarea>
         <br>
         <button onclick="loop()">convert</button>
-        <button id="danger" onclick="reset()">reset</button>
+        <button id="danger" onclick="reset('input','output','escaped','array','separator')">reset</button>
         <small>
             <p>(use 'ELEMENT' as a placeholder value from the array, can only be used once)</p>
         </small>
@@ -21,7 +23,7 @@
         <h3>output:</h3>
         <textarea readonly name="output" id="output"></textarea>
         <br>
-        <button id="secondary" onclick="copy()">copy</button>
+        <button id="secondary" onclick="copy('output')">copy</button>
         <small>
             <p>(replace 'SEPARATOR' with anything to separate the response)</p>
         </small>
@@ -29,6 +31,7 @@
         <script>
             function loop(){
                 let input = document.getElementById("input").value
+                    .replace(/%{DOL}%/g,'%{DOL}%trimSpace[$\]')
                     .replace(/\$/g,'%{DOL}%')
                     .replace(/\]/g,'\\]')
                     .replace(/\;/g,'\\;');
@@ -49,15 +52,6 @@
                     output = `$eval[$textSplit[${array};]${code[0]}$joinSplitText[${code[1]}SEPARATOR${code[0]}]${code[1]}]`
                 }
                 document.getElementById('output').value=output;
-            }
-            
-            function reset(){
-                document.getElementById('input').value = document.getElementById('output').value = ""
-            }
-            
-            function copy(){
-                const text = document.getElementById('output').value;
-                navigator.clipboard.writeText(text)
             }
         </script>
     </body>
