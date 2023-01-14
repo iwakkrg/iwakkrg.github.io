@@ -3,35 +3,29 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" href="style.css"/>
+        <script src="scripts.js"></script>
     </head>
     <body>
-        <h1>bds code escaper I guess</h1>
-        <h3>code input:</h3>
-        <textarea id="input"></textarea><br>
-        <button onclick="escape()">escape</button>
-        <button id="danger" onclick="reset()">reset</button>
-        <br><br>
-        <h3>output:</h3>
-        <textarea readonly id="output"></textarea><br>
-        <button id="secondary" onclick="copy()">copy</button>
-        
+        <div class="main">
+            <h1>bds code escaper I guess</h1>
+            <h3>code input:</h3>
+            <textarea id="input"></textarea><br>
+            <button onclick="escape()">escape</button>
+            <button id="danger" onclick="reset('input','output')">reset</button>
+            <br><br>
+            <h3>output:</h3>
+            <textarea readonly id="output"></textarea><br>
+            <button id="secondary" onclick="copy('output')">copy</button>
+        </div>
         <script>
             function escape(){
                 const input = document.getElementById("input").value
                 const output = input
+                    .replace(/%{DOL}%/g,'%{DOL}%trimSpace[$\]')
                     .replace(/\$/g,'%{DOL}%')
                     .replace(/\]/g,'\\]')
                     .replace(/\;/g,'\\;');
                 document.getElementById('output').value=output;
-            }
-            
-            function reset(){
-                document.getElementById('input').value = document.getElementById('output').value = ""
-            }
-            
-            function copy(){
-                const text = document.getElementById('output').value;
-                navigator.clipboard.writeText(text)
             }
         </script>
     </body>
