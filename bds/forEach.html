@@ -21,6 +21,7 @@
         </small>
         <br>
         <h3>output:</h3>
+        separator: <input type="text" id="output_separator" placeholder="use '\n' for new line"></input><br>
         <textarea readonly name="output" id="output"></textarea>
         <br>
         <button id="secondary" onclick="copy('output')">copy</button>
@@ -38,18 +39,17 @@
                 let separator = document.getElementById('separator').value.replace(/\\n/g,'\n');
                 const escaped = document.getElementById('escaped').value;
                 const array = document.getElementById('array').value;
-            
-                const code = input.split("ELEMENT");
-                let start = code[0]
-                let end = code[1]
+                let output_separator = document.getElementById('output_separator').value.replace(/\\n/g,'\n') || "SEPARATOR";
+
+                let [start, end] = input.split("ELEMENT");
                 if(escaped){
-                    start = `${code[0]}%{DOL}%url[decode\\;`
-                    end = `\\]${code[1]}`
+                    start = `${start}%{DOL}%url[decode\\;`
+                    end = `\\]${end}`
                     separator = encodeURIComponent(separator).replace(/\%20/g,'+')
                 }
-                let output = `$eval[${start}$replaceText[${escaped?'$url[encode;'+array+']':array};${separator};${end}SEPARATOR${start}]${end}]`;
+                let output = `$eval[${start}$replaceText[${escaped?'$url[encode;'+array+']':array};${separator};${end+output_separator+start}]${end}]`;
                 if(separator==""){
-                    output = `$eval[$textSplit[${array};]${code[0]}$joinSplitText[${code[1]}SEPARATOR${code[0]}]${code[1]}]`
+                    output = `$eval[$textSplit[${array};]${start}$joinSplitText[${end+output_separator+start}]${end}]`
                 }
                 document.getElementById('output').value=output;
             }
